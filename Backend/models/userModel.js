@@ -32,9 +32,9 @@ const userSchema = new mongoose.Schema({
 
 
 // creating method on userSchema, function name is generateAuthToken, comparePaaaword and hashPassword
-userSchema.methods.generateAuthToken = ()=>{
+userSchema.methods.generateAuthToken = function(){
     //To generate JWT token
-    const token = jwt.sign({_id: this._id}, process.env.JWT_SECRET);
+    const token = jwt.sign({_id: this._id}, process.env.JWT_SECRET,{expiresIn: '24h'});
     return token;
 }
 
