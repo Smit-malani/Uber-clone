@@ -38,10 +38,9 @@ userSchema.methods.generateAuthToken = ()=>{
     return token;
 }
 
-userSchema.methods.comparePassword = async(password)=>{
-    //This used when user login, comparing password
-    return await bcrypt.compare(password,this.password)
-}
+userSchema.methods.comparePassword = async function (password) {
+    return await bcrypt.compare(password, this.password);
+};
 
 userSchema.statics.hashPassword = async (password)=>{
     // this used when user register, hashing password for 10 times.

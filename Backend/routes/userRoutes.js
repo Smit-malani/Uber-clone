@@ -10,4 +10,9 @@ router.post('/register',[
     body('password').isLength({min:6}).withMessage('password must have three charachter')
 ],userController.registerUser)
 
+router.post('/login',[
+    body('email').isEmail().withMessage("inavlid email"),
+    body('password').isLength({min:6}).withMessage("password not match")
+],userController.loginUser)
+
 module.exports = router
