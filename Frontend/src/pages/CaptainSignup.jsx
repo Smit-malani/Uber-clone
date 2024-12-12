@@ -71,7 +71,7 @@ function CaptainSignup(){
                     onChange={(e)=>{setPassword(e.target.value)}}
                 />
                 <div className="w-full flex items-center justify-center bg-black py-2 rounded-md hover:bg-gray-800">
-                    <button className="text-white font-medium text-lg">SIGN-UP</button>
+                    <button className="text-white font-medium text-lg">Create account</button>
                 </div>
             </form>
             <p className="text-center text-sm lg:text-base">Alredy have account? <Link to='/captain-login' className="text-blue-500">Login here</Link> </p>

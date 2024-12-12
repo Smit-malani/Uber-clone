@@ -1,6 +1,8 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import Uber_logo_home_page from '../assets/Uber-logo-home-page.png'
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import axios from 'axios'
+import {UserDataContext} from "../context/UserContext";
 
 
 function UserSignup(){
@@ -11,17 +13,30 @@ function UserSignup(){
     const[password,setPassword] = useState('')
     const[userData,setUserdata] = useState({})
 
-    function submitHandler(e){
+
+    const navigate = useNavigate()
+
+    const {user, setUser} = useContext(UserDataContext)
+
+    async function submitHandler(e){
         e.preventDefault()
 
-        setUserdata({
+        const newUser={
             fullname:{
                 firstname:firstname,
                 lastname:lastname
             },
             email: email,
             password: password
-        })
+        }
+
+        const res = await axios.post(`${import.meta.env.VITE_BASE_URL}/users/register`,newUser)
+        if(res.status == 201){
+            const data = res.data
+
+            setUser(data.user)
+            navigate('/home')
+        }
 
         setFirstname('')
         setLastname('')
@@ -72,7 +87,7 @@ function UserSignup(){
                         onChange={(e)=>{setPassword(e.target.value)}}
                     />
                     <div className="w-full flex items-center justify-center bg-black py-2 rounded-md hover:bg-gray-800">
-                        <button className="text-white font-medium text-lg">SIGN-UP</button>
+                        <button className="text-white font-medium text-lg">Create account</button>
                     </div>
                 </form>
                 <p className="text-center text-sm lg:text-base">Alredy have account? <Link to='/login' className="text-blue-500">Login here</Link> </p>
