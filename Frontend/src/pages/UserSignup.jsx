@@ -33,8 +33,8 @@ function UserSignup(){
         const res = await axios.post(`${import.meta.env.VITE_BASE_URL}/users/register`,newUser)
         if(res.status == 201){
             const data = res.data
-
             setUser(data.user)
+            localStorage.setItem('token',data.token)
             navigate('/home')
         }
 

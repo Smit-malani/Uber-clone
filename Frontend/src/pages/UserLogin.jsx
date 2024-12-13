@@ -14,7 +14,7 @@ function UserLogin(){
     const navigate = useNavigate()
 
     async function submitHandler(e){
-        e.preventDefault()
+        e.preventDefault() 
         
         const userData = {
             email: email,
@@ -26,6 +26,7 @@ function UserLogin(){
         if(res.status == 200){
             const data = res.data
             setUser(data.user)
+            localStorage.setItem('token',data.token)
             navigate('/home')
         }
         
