@@ -19,8 +19,8 @@ function CaptainLogin(){
             email:email,
             password:password
         }
-        const res = await axios.post(`${import.meta.env.VITE_BASE_URL}/captain/login`,)
-        if(res.status ==201){
+        const res = await axios.post(`${import.meta.env.VITE_BASE_URL}/captain/login`,captain)
+        if(res.status ==200){
             const data = res.data
             setCaptain(data.captain)
             localStorage.setItem('token',data.token)
