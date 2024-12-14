@@ -4,6 +4,8 @@ import map_temp from "../assets/map_temp.gif"
 import {useGSAP} from "@gsap/react"
 import gsap from "gsap"
 import 'remixicon/fonts/remixicon.css'
+import LocationSearchPanel from "../components/LocationSearchPanel"
+import PricePanel from "../components/PricePanel"
 
 function Home(){
 
@@ -39,14 +41,14 @@ function Home(){
 
 
     return (
-        <div className="h-screen relative">
+        <div className="h-screen relative overflow-hidden">
             <img className="w-20 absolute left-5 top-5" src={Uber_logo_home_page} alt="UBER" /> 
             <div className="h-screen bg-red-300">
                 <img className="h-full w-full lg:object-cover object-cover" src={map_temp} alt="unabele to load map" />
             </div>
             <div className="h-screen flex flex-col justify-end absolute bottom-0 lg:left-1/2 lg:transform lg:-translate-x-1/2  w-full lg:w-1/2">
                 <div className="h-[30%] bg-white p-5 ">
-                    <h5 className="absolute top-6 right-4 text-xl invisible" onClick={()=>{setPanelOpen(false)}}>                
+                    <h5 className="absolute top-6 right-5 text-xl invisible" onClick={()=>{setPanelOpen(false)}}>                
                         <i ref={arrowRef} className="ri-arrow-down-s-line"></i>
                     </h5>
                     <h4 className="text-2xl font-bold">Find a trip</h4>
@@ -70,7 +72,12 @@ function Home(){
                         />
                     </form>
                 </div>
-                <div ref={panelRef} className="h-0 w-full bg-red-300"></div>
+                <div ref={panelRef} className="h-0 w-ful bg-white">
+                    {<LocationSearchPanel/>}
+                </div>
+                <div className="fixed z-10 flex flex-col items-start justify-center gap-3 bg-white w-full p-3">
+                    <PricePanel/>
+                </div>
             </div>
         </div>
     )
