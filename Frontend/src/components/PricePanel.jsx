@@ -1,13 +1,22 @@
-import React from "react";
+import React, { useState } from "react";
 import car from "../assets/car.png"
 import bike from "../assets/bike.webp"
 import auto from "../assets/auto.webp"
 
-function PricePanel(){
+function PricePanel(props){
+
     return(
         <>
-            <h3 className="text-xl font-semibold">Choose a vehicle</h3>
-            <div className=" border-2 rounded-xl p-2 active:border-black justify-between flex w-full items-center">
+            <div className="flex items-center justify-between w-full">
+                <h3 className="text-xl font-semibold">Choose a vehicle</h3>
+                <i onClick={()=>{props.setVehiclePanelOpen(false)
+                }} className="ri-arrow-down-s-line"></i>
+            </div>
+            
+            <div onClick={()=>{
+                props.setConfirmRidePanel(true)
+                props.setVehiclePanelOpen(false)
+            }} className=" border-2 rounded-xl p-2 active:border-black justify-between flex w-full items-center">
                 <img className="w-16" src={car} alt="car" />
                 <div className="w-44">
                     <div className="flex items-center">
@@ -20,7 +29,10 @@ function PricePanel(){
                 </div>
                 <p className="font-semibold text-lg">₹193.20</p>
             </div>
-            <div className=" border-2 rounded-xl p-2 active:border-black justify-between flex w-full items-center">
+            <div onClick={()=>{
+                props.setConfirmRidePanel(true)
+                props.setVehiclePanelOpen(false)
+            }}  className=" border-2 rounded-xl p-2 active:border-black justify-between flex w-full items-center">
                 <img className="w-16" src={bike} alt="" />   
                 <div className="w-44">
                     <div className="flex items-center">
@@ -33,7 +45,10 @@ function PricePanel(){
                 </div>
                 <p className="font-semibold text-lg">₹65.17</p>          
             </div>
-            <div className=" border-2 rounded-xl p-2 active:border-black justify-between flex w-full items-center">
+            <div onClick={()=>{
+                props.setConfirmRidePanel(true)
+                props.setVehiclePanelOpen(false)
+            }} className=" border-2 rounded-xl p-2 active:border-black justify-between flex w-full items-center">
                 <img className="w-16" src={auto} alt="" />   
                 <div className="w-44">
                     <div className="flex items-center">
