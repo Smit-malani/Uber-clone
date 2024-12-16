@@ -2,10 +2,11 @@ import React from "react";
 import profile from "../assets/profile.jpg"
 
 
+
 function CaptainDetails(){
     return(
         <>
-            <div className="lg:px-5 lg:pt-3 flex items-center justify-between gap-5 ">
+            <div className="lg:px-5 flex items-center justify-between gap-5 ">
                 <div className="flex gap-3 items-center">
                     <div className="h-12 w-12 rounded-full overflow-hidden">
                         <img className="w-full h-full object-cover" src={profile} alt="UserImge" />
