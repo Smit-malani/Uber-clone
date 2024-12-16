@@ -2,13 +2,13 @@ import React from "react";
 import car from "../assets/car.png"
 
 
-function LookingForDriver(){
+function LookingForDriver(props){
     
     return(
         <>
             <div className="flex items-center justify-between w-full px-3 py-2">
                 <h3 className="text-xl font-semibold">Lookin for Driver</h3>
-                <i className="ri-arrow-down-s-line" ></i>
+                <i className="ri-arrow-down-s-line" onClick={()=>{props.setVehicleFound(false)}} ></i>
             </div>
             <div className="flex flex-col items-center justify-center w-full pb-4">
                 <div className="w-full flex justify-center border-b-[1px] border-gray-300 pb-5">

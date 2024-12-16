@@ -8,6 +8,7 @@ import LocationSearchPanel from "../components/LocationSearchPanel"
 import PricePanel from "../components/PricePanel"
 import ConfirmRide from "../components/ConfirmRide"
 import LookingForDriver from "../components/LookingForDriver"
+import WaitingForDriver from "../components/WaitingForDriver"
 
 function Home(){
 
@@ -20,10 +21,14 @@ function Home(){
     const vehiclePanelRef = useRef(null)
     const ConfirmRidePanelRef = useRef(null)
     const vehicleFoundRef = useRef(null)
+    const waitingForDriverRef = useRef(null)
+
     
     const [vehiclePanelOpen, setVehiclePanelOpen] = useState(false)
     const [confirmRidePanel,setConfirmRidePanel] = useState(false)
     const [vehicleFound, setVehicleFound] = useState(false)
+    const [waitingForDriver, setWaitingForDriver] = useState(false)
+
 
     function submitHandler(e){
         e.preventDefault()
@@ -84,6 +89,18 @@ function Home(){
         }
     },[vehicleFound])
 
+    useGSAP(function(){
+        if(waitingForDriver){
+            gsap.to(waitingForDriverRef.current,{
+                transform: 'translateY(0)'
+            })
+        }else{
+            gsap.to(waitingForDriverRef.current,{
+                transform: 'translateY(100%)'
+            })
+        }
+    },[waitingForDriver])
+
 
 
     return (
@@ -128,7 +145,10 @@ function Home(){
                     <ConfirmRide setConfirmRidePanel={setConfirmRidePanel} setVehicleFound={setVehicleFound}/>
                 </div>
                 <div ref={vehicleFoundRef} className="fixed z-10 flex flex-col items-start justify-center gap-3 translate-y-full bg-white w-full">
-                    <LookingForDriver />
+                    <LookingForDriver setVehicleFound={setVehicleFound}/>
+                </div>
+                <div ref={waitingForDriverRef}  className="fixed z-10 flex flex-col items-start justify-center gap-3 bg-white w-full">
+                    <WaitingForDriver setWaitingForDriver={setWaitingForDriver}/>
                 </div>
                 
             </div>
