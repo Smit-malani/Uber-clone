@@ -144,7 +144,7 @@ function Home(){
                 <div ref={ConfirmRidePanelRef} className="fixed z-10 flex flex-col items-start justify-center gap-3 translate-y-full bg-white w-full">
                     <ConfirmRide setConfirmRidePanel={setConfirmRidePanel} setVehicleFound={setVehicleFound}/>
                 </div>
-                <div ref={vehicleFoundRef} className="fixed z-10 flex flex-col items-start justify-center gap-3 translate-y-full bg-white w-full">
+                <div ref={vehicleFoundRef} className="fixed z-10 flex flex-col items-start justify-center gap-3 bg-white w-full">
                     <LookingForDriver setVehicleFound={setVehicleFound}/>
                 </div>
                 <div ref={waitingForDriverRef}  className="fixed z-10 flex flex-col items-start justify-center gap-3 bg-white w-full">
