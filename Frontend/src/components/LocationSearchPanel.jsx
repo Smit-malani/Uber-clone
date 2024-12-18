@@ -18,7 +18,7 @@ function LocationSearchPanel({suggestions, setVehiclePanelOpen, setPanelOpen, se
                 suggestions.map((elem,idx)=>{
                     return <div key={idx} onClick={()=>{
                                 handleSuggestionClick(elem.description)
-                                }} className="flex items-center justify-start gap-4 border-2 p-2 border-white rounded-lg active:border-black">
+                                }} className="flex items-center justify-start gap-4 border-2 p-2 border-white rounded-lg active:border-black cursor-pointer">
                                 <h2 className="bg-[#eee] px-2 py-1 rounded-full"><i className="ri-map-pin-line font-bold text-xl"></i></h2>
                                 <h4 className="font-medium">{elem.description}</h4>
                             </div>

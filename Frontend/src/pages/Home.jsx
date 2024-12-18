@@ -29,6 +29,8 @@ function Home(){
     const [vehicleFound, setVehicleFound] = useState(false)
     const [waitingForDriver, setWaitingForDriver] = useState(false)
     const [ activeField, setActiveField ] = useState(null)
+    const [fare,setFare] = useState({})
+    const [vehicleType, setVehicleType] = useState(null)
 
     const [pickupSuggestions,setPickupSuggestions] = useState([])
     const [destinationSuggestions, setDestinationSuggestions] = useState([])
@@ -62,11 +64,32 @@ function Home(){
         }
     }
 
-    function findTrip(){
+    async function findTrip(){
         setVehiclePanelOpen(true)
          setPanelOpen(false)
-    }
 
+         const res = await axios.get(`${import.meta.env.VITE_BASE_URL}/rides/get-fare`,{
+            params:{pickup,destination},
+            headers:{
+                Authorization :`Bearer ${localStorage.getItem('token')}`
+            }
+         })
+        setFare(res.data)         
+    }    
+
+    async function createRide(){
+        const res = await axios.post(`${import.meta.env.VITE_BASE_URL}/rides/create`,{
+            pickup,
+            destination,
+            vehicleType
+        },{
+            headers:{
+                Authorization: `Bearer ${localStorage.getItem('token')}`
+            }
+        })
+        console.log(res.data);
+        
+    }
 
     function submitHandler(e){
         e.preventDefault()
@@ -94,11 +117,11 @@ function Home(){
     useGSAP(function(){
         if(vehiclePanelOpen){
             gsap.to(vehiclePanelRef.current,{
-                transform: 'translateY(0)'
+                transform: 'translateY(0)',
             })
         }else{
             gsap.to(vehiclePanelRef.current,{
-                transform: 'translateY(100%)'
+                transform: 'translateY(100%)',
             })
         }
     },[vehiclePanelOpen])
@@ -106,7 +129,8 @@ function Home(){
     useGSAP(function(){
         if(confirmRidePanel){
             gsap.to(ConfirmRidePanelRef.current,{
-                transform: 'translateY(0)'
+                transform: 'translateY(0)',
+                zIndex:30
             })
         }else{
             gsap.to(ConfirmRidePanelRef.current,{
@@ -118,7 +142,9 @@ function Home(){
     useGSAP(function(){
         if(vehicleFound){
             gsap.to(vehicleFoundRef.current,{
-                transform: 'translateY(0)'
+                transform: 'translateY(0)',
+                zIndex:30
+
             })
         }else{
             gsap.to(vehicleFoundRef.current,{
@@ -148,7 +174,7 @@ function Home(){
                 <img  className="h-full w-full lg:object-cover object-cover pointer-events-none" src={map_temp} alt="unabele to load map" />
             </div>
             <div className="h-screen flex flex-col justify-end absolute bottom-0 lg:left-1/2 lg:transform lg:-translate-x-1/2  w-full lg:w-1/2">
-                <div className="h-[30%] bg-white p-5 relative">
+                <div className="h-[30%] bg-white p-5 relative z-20">
                     <h5 className="absolute top-6 right-5 text-xl invisible" onClick={()=>{setPanelOpen(false)}}>                
                         <i ref={arrowRef} className="ri-arrow-down-s-line"></i>
                     </h5>
@@ -185,7 +211,7 @@ function Home(){
                         Find Trip
                     </button>
                 </div>
-                <div ref={panelRef} className="h-full w-ful bg-white">
+                <div ref={panelRef} className="h-full w-ful bg-white z-10">
                     <LocationSearchPanel
                         suggestions={activeField === 'pickup' ? pickupSuggestions : destinationSuggestions}
                         setPanelOpen={setPanelOpen}
@@ -195,14 +221,35 @@ function Home(){
                         activeField={activeField}
                     />
                 </div>
-                <div ref={vehiclePanelRef} className="fixed z-10 flex flex-col items-start justify-center gap-3 translate-y-full bg-white w-full p-3">
-                    <PricePanel setVehiclePanelOpen={setVehiclePanelOpen} setConfirmRidePanel={setConfirmRidePanel}/>
+                <div ref={vehiclePanelRef} className="fixed z-30 flex flex-col items-start justify-center gap-3 translate-y-full bg-white w-full p-3">
+                    <PricePanel 
+                        setVehiclePanelOpen={setVehiclePanelOpen} 
+                        setConfirmRidePanel={setConfirmRidePanel} 
+                        fare={fare}
+                        setVehicleType={setVehicleType}
+                    />
                 </div>
-                <div ref={ConfirmRidePanelRef} className="fixed z-10 flex flex-col items-start justify-center gap-3 translate-y-full bg-white w-full">
-                    <ConfirmRide setConfirmRidePanel={setConfirmRidePanel} setVehicleFound={setVehicleFound}/>
+                <div ref={ConfirmRidePanelRef} className="fixed z-0 flex flex-col items-start justify-center gap-3 translate-y-full bg-white w-full">
+                    <ConfirmRide 
+                    setConfirmRidePanel={setConfirmRidePanel} 
+                    setVehicleFound={setVehicleFound}
+                    createRide={createRide}
+                    pickup={pickup}
+                    destination={destination}
+                    fare={fare}
+                    vehicleType={vehicleType}
+                    setVehicleType={setVehicleType}
+                    />
                 </div>
-                <div ref={vehicleFoundRef} className="fixed z-10 flex flex-col items-start justify-center gap-3 translate-y-full bg-white w-full">
-                    <LookingForDriver setVehicleFound={setVehicleFound}/>
+                <div ref={vehicleFoundRef} className="fixed z-0 flex flex-col items-start justify-center gap-3 translate-y-full bg-white w-full">
+                    <LookingForDriver 
+                    setVehicleFound={setVehicleFound}
+                    pickup={pickup}
+                    destination={destination}
+                    fare={fare}
+                    vehicleType={vehicleType}
+                    setVehicleType={setVehicleType}
+                    />
                 </div>
                 <div ref={waitingForDriverRef}  className="fixed z-10 flex flex-col items-start justify-center gap-3 translate-y-full bg-white w-full">
                     <WaitingForDriver setWaitingForDriver={setWaitingForDriver}/>

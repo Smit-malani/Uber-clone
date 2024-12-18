@@ -16,7 +16,8 @@ function PricePanel(props){
             <div onClick={()=>{
                 props.setConfirmRidePanel(true)
                 props.setVehiclePanelOpen(false)
-            }} className=" border-2 rounded-xl p-2 active:border-black justify-between flex w-full items-center">
+                props.setVehicleType('car')
+            }} className=" border-2 rounded-xl p-2 active:border-black justify-between flex w-full items-center cursor-pointer">
                 <img className="w-16" src={car} alt="car" />
                 <div className="w-44">
                     <div className="flex items-center">
@@ -27,12 +28,13 @@ function PricePanel(props){
                     <p className="text-sm font-medium">2 min away-15:24</p>
                     <p className="text-sm opacity-80">Affortable, Compact rides</p>
                 </div>
-                <p className="font-semibold text-lg">₹193.20</p>
+                <p className="font-semibold text-lg">₹{props.fare.car}</p>
             </div>
             <div onClick={()=>{
                 props.setConfirmRidePanel(true)
                 props.setVehiclePanelOpen(false)
-            }}  className=" border-2 rounded-xl p-2 active:border-black justify-between flex w-full items-center">
+                props.setVehicleType('bike')
+            }}  className=" border-2 rounded-xl p-2 active:border-black justify-between flex w-full items-center cursor-pointer">
                 <img className="w-16" src={bike} alt="" />   
                 <div className="w-44">
                     <div className="flex items-center">
@@ -43,12 +45,13 @@ function PricePanel(props){
                     <p className="text-sm font-medium">3 min away-15:24</p>
                     <p className="text-sm opacity-80">Affortable motorcycle rides</p>
                 </div>
-                <p className="font-semibold text-lg">₹65.17</p>          
+                <p className="font-semibold text-lg">₹{props.fare.moto}</p>          
             </div>
             <div onClick={()=>{
                 props.setConfirmRidePanel(true)
                 props.setVehiclePanelOpen(false)
-            }} className=" border-2 rounded-xl p-2 active:border-black justify-between flex w-full items-center">
+                props.setVehicleType('moto')
+            }} className=" border-2 rounded-xl p-2 active:border-black justify-between flex w-full items-center cursor-pointer">
                 <img className="w-16" src={auto} alt="" />   
                 <div className="w-44">
                     <div className="flex items-center">
@@ -59,7 +62,7 @@ function PricePanel(props){
                     <p className="text-sm font-medium">2 min away-15:24</p>
                     <p className="text-sm opacity-80">Affortable auto rides</p>
                 </div>
-                <p className="font-semibold text-lg">₹65.17</p>          
+                <p className="font-semibold text-lg">₹{props.fare.auto}</p>          
             </div>
         </>
     )
