@@ -1,9 +1,12 @@
-import React from "react";
+import React, { useContext } from "react";
 import profile from "../assets/profile.jpg"
+import {CaptainDataContext} from "../context/CaptainContext"
 
 
 
 function CaptainDetails(){
+
+    const {captain} = useContext(CaptainDataContext)
     return(
         <>
             <div className="lg:px-5 flex items-center justify-between gap-5 ">
@@ -12,7 +15,7 @@ function CaptainDetails(){
                         <img className="w-full h-full object-cover" src={profile} alt="UserImge" />
                     </div>
                     <div>
-                        <h3 className="font-semibold text-lg">Jeremiah Curties</h3>
+                        <h3 className="font-semibold text-lg capitalize">{captain.fullname.firstname + " " + captain.fullname.lastname}</h3>
                         <p className="text-sm opacity-70">Basic Level</p>
                     </div>
                 </div>

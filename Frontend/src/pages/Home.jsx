@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react"
+import React, { useContext, useEffect, useRef, useState } from "react"
 import Uber_logo_home_page from "../assets/Uber-logo-home-page.png"
 import map_temp from "../assets/map_temp.gif"
 import {useGSAP} from "@gsap/react"
@@ -9,6 +9,9 @@ import PricePanel from "../components/PricePanel"
 import ConfirmRide from "../components/ConfirmRide"
 import LookingForDriver from "../components/LookingForDriver"
 import WaitingForDriver from "../components/WaitingForDriver"
+import { SocketContext } from "../context/socketContext"
+import { UserDataContext } from '../context/UserContext';
+import { useNavigate } from 'react-router-dom';
 import axios from "axios"
 
 function Home(){
@@ -31,10 +34,26 @@ function Home(){
     const [ activeField, setActiveField ] = useState(null)
     const [fare,setFare] = useState({})
     const [vehicleType, setVehicleType] = useState(null)
+    const [ ride, setRide ] = useState(null)
 
     const [pickupSuggestions,setPickupSuggestions] = useState([])
     const [destinationSuggestions, setDestinationSuggestions] = useState([])
 
+    const { socket } = useContext(SocketContext)
+    const { user } = useContext(UserDataContext)
+
+
+    useEffect(() => {
+        socket.emit("join", { userType: "user", userId: user._id })
+    }, [ user ])
+
+    socket.on('ride-confirmed', ride => {
+
+
+        setVehicleFound(false)
+        setWaitingForDriver(true)
+        setRide(ride)
+    })
 
     async function handlePickupChange(e){
         setPickup(e.target.value)
@@ -87,7 +106,7 @@ function Home(){
                 Authorization: `Bearer ${localStorage.getItem('token')}`
             }
         })
-        console.log(res.data);
+        // console.log(res.data);
         
     }
 
